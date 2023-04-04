@@ -48,9 +48,9 @@ class DrawGame {
                                 x,
                                 y
                             )
-                        ) -> print(Color.ANSI_YELLOW.hex + " 1 " + Color.ANSI_BLACK.hex)
+                        ) -> print(Color.ANSI_YELLOW.hex + " 1 " + Color.ANSI_RESET.hex)
 
-                        else -> print(Color.ANSI_BLUE.hex + " ~ " + Color.ANSI_BLACK.hex)
+                        else -> print(Color.ANSI_BLUE.hex + " ~ " + Color.ANSI_RESET.hex)
                     }
                 }
                 println()
