@@ -21,11 +21,13 @@ class PlayGround(val width: Int, val height: Int) {
         return isShip(coordinate)
     }
 
-    fun isSink(ship: Ship): Boolean {
-        return ship.isSink(hits)
+    fun isSink(ship: Ship?): Boolean {
+        return ship?.isSink(hits) ?: false
     }
 
     fun getHits(): List<Coordinate> = hits
+
+    fun getShips(): List<Ship> = ships
 
     fun isShip(coordinate: Coordinate): Ship? {
         return ships.find { it.isShip(coordinate) }

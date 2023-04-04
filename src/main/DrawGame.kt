@@ -39,20 +39,16 @@ class DrawGame {
                     val shot = Coordinate(x, y)
                     val isShip = playGround.isShip(Coordinate(x, y))
                     when {
-                        playGround.getHits().contains(shot) && isShip -> {
-                            print(" X ")
+                        // zasah lodi
+                        playGround.getHits().contains(shot) && isShip != null -> {
+                            print(Color.ANSI_RED.hex + " X " + Color.ANSI_RESET.hex)
                         }
-
-                        playGround.getHits().contains(shot) && !isShip -> {
+                        // strela mimo
+                        playGround.getHits().contains(shot) && isShip == null -> {
                             print(" 0 ")
                         }
 
-                        playGround.isShip(
-                            Coordinate(
-                                x,
-                                y
-                            )
-                        ) -> {
+                        playGround.isShip(Coordinate(x, y)) != null -> {
                             if (!hideShips) print(Color.ANSI_YELLOW.hex + " * " + Color.ANSI_RESET.hex)
                             else print(Color.ANSI_BLUE.hex + " ~ " + Color.ANSI_RESET.hex)
                         }

@@ -54,7 +54,6 @@ fun main() {
     }
 
     val playGroundPC = PlayGround(size, size)
-    println("Mapa PC")
 
     for (x in 0 until COUNT_OF_SHIPS) {
         playGroundPC.insertShip(
@@ -77,12 +76,15 @@ fun main() {
         val column = scanner.nextInt() - 1
         println("Zadej řádek")
         val row = scanner.nextInt() - 1
-        val isHit = playGroundPlayer.shoot(Coordinate(row, column))
-        DrawGame.draw(playGroundPlayer)
-        if (isHit) {
-            println("Vaše lod byla zasazena")
-        } else {
-            println("Vedle")
-        }
+        val ship = playGroundPC.shoot(Coordinate(row, column))
+        val isHit = ship != null
+        val isSink = playGroundPC.isSink(ship)
+        DrawGame.draw(playGroundPC)
+        if (isHit && isSink) {
+            println("Loď potopena")
+        } else if (isHit) {
+            println("Zásah")
+        } else println("Vedle")
+
     }
 }
