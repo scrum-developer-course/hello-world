@@ -1,8 +1,11 @@
 package main
 
+import kotlin.random.Random
+
 enum class ShipDirection {
     V, H
 }
+
 class ShipSlim(
     private val position: Coordinate,
     private val length: Int,
@@ -24,13 +27,13 @@ class ShipSlim(
     override fun getShipCoordinate(): Set<Coordinate> {
 
         val coordinates = mutableSetOf<Coordinate>()
-        if(direction == ShipDirection.H) {
+        if (direction == ShipDirection.H) {
             for (y in 0 until length) {
-                coordinates.add(Coordinate(position.x,position.y + y))
+                coordinates.add(Coordinate(position.x, position.y + y))
             }
         } else {
-            for (x in 0 until length){
-                coordinates.add(Coordinate(position.x + x,position.y))
+            for (x in 0 until length) {
+                coordinates.add(Coordinate(position.x + x, position.y))
             }
         }
         return coordinates
@@ -43,4 +46,18 @@ class ShipSlim(
             else -> (position.y + length) > y
         }
     }
+
+    companion object {
+        fun buildRandomShip(): Ship {
+            return ShipSlim(
+                position = Coordinate(
+                    Random.nextInt(1, PLAYGROUND_SIZE),
+                    Random.nextInt(1, PLAYGROUND_SIZE)
+                ),
+                length = Random.nextInt(1, 4),
+                direction = if (Random.nextBoolean()) ShipDirection.H else ShipDirection.V
+            )
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package main
 
 import kotlin.random.Random
 import java.util.Scanner
+import kotlin.system.exitProcess
 
 // Hello World Application
 
@@ -56,16 +57,16 @@ fun main() {
     val playGroundPC = PlayGround(size, size)
 
     for (x in 0 until COUNT_OF_SHIPS) {
-        playGroundPC.insertShip(
-            ship = ShipSlim(
-                position = Coordinate(
-                    Random.nextInt(1, PLAYGROUND_SIZE),
-                    Random.nextInt(1, PLAYGROUND_SIZE)
-                ),
-                length = Random.nextInt(1, 4),
-                direction = if (Random.nextBoolean()) ShipDirection.H else ShipDirection.V
-            )
-        )
+        var validShipPosition: Boolean
+        var ship = ShipSlim.buildRandomShip()
+        do {
+            validShipPosition = playGroundPC.checkInsertShip(ship = ship)
+            if (!validShipPosition) {
+                ShipSlim.buildRandomShip()
+            }
+        } while (!validShipPosition)
+
+        playGroundPC.insertShip(ship = ship)
     }
     println("======== MAPA PC ========")
     DrawGame.draw(playGroundPC, true)
@@ -80,11 +81,16 @@ fun main() {
         val isHit = ship != null
         val isSink = playGroundPC.isSink(ship)
         DrawGame.draw(playGroundPC)
+
         if (isHit && isSink) {
             println("Loď potopena")
         } else if (isHit) {
             println("Zásah")
         } else println("Vedle")
 
+        if (playGroundPC.allShipSink()) {
+            println("Vyhrál jsi")
+            exitProcess(0)
+        }
     }
 }
