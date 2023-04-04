@@ -11,10 +11,12 @@ interface Ship {
     fun getShipCoordinate(): Set<Coordinate>
 
     fun hasConflict(ship: Ship): Boolean {
-        return !getShipCoordinate().any { currentCoordinate ->
+        return getShipCoordinate().any { currentCoordinate ->
             ship.getShipCoordinate().any {
                 abs(it.y-currentCoordinate.y)<=1 && abs(it.x - currentCoordinate.x) <= 1
             }
         }
     }
+
+    fun hasConflict(x: Int,y: Int): Boolean
 }

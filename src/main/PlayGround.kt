@@ -1,6 +1,5 @@
 package main
 
-import java.lang.Exception
 
 class PlayGround(val width: Int, val height: Int) {
 
@@ -8,20 +7,18 @@ class PlayGround(val width: Int, val height: Int) {
     private val hits = mutableListOf<Coordinate>()
 
     fun checkInsertShip(ship: Ship): Boolean {
-        return ships.any { it.hasConflict(ship) }
+        return ships.all { !it.hasConflict(ship) }
     }
+
     fun insertShip(ship: Ship) {
         ships.add(ship)
     }
+
     fun canShoot(coordinate: Coordinate) = !hits.contains(coordinate)
 
     fun shoot(coordinate: Coordinate): Boolean {
-        return if (canShoot(coordinate)) {
-            hits.add(coordinate)
-            isShip(coordinate)
-        } else {
-            throw Exception("Is already")
-        }
+        hits.add(coordinate)
+        return isShip(coordinate)
     }
 
     fun getHits(): List<Coordinate> = hits
@@ -30,7 +27,7 @@ class PlayGround(val width: Int, val height: Int) {
         return ships.any { it.isShip(coordinate) }
     }
 
-    fun allShipSink() : Boolean {
+    fun allShipSink(): Boolean {
         return ships.all { it.isSink(hits) }
     }
 }

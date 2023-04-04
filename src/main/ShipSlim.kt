@@ -18,21 +18,29 @@ class ShipSlim(
     }
 
     override fun isSink(shots: Collection<Coordinate>): Boolean {
-        return shots.filter { isShip(it) }.size == length
+        return getShipCoordinate().all { shots.contains(it) }
     }
 
     override fun getShipCoordinate(): Set<Coordinate> {
 
         val coordinates = mutableSetOf<Coordinate>()
         if(direction == ShipDirection.H) {
-            for (y in 0 .. length) {
+            for (y in 0 until length) {
                 coordinates.add(Coordinate(position.x,position.y + y))
             }
         } else {
-            for (x in 0 .. length){
+            for (x in 0 until length){
                 coordinates.add(Coordinate(position.x + x,position.y))
             }
         }
         return coordinates
+    }
+
+    override fun hasConflict(x: Int, y: Int): Boolean {
+        return when {
+            position.x > x && position.y > y -> false
+            direction == ShipDirection.H -> (position.x + length) <= x
+            else -> (position.y + length) <= y
+        }
     }
 }
