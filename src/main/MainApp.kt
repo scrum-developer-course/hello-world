@@ -29,7 +29,37 @@ fun main() {
     val playGroundPlayer = PlayGround(size, size)
 //    println("Mapa hráče")
 //    DrawGame.draw(playGroundPlayer)
+    setPlayerShips(playGroundPlayer)
 
+    val playGroundPC = PlayGround(size, size)
+    setPCShips(playGroundPC)
+
+    while (true) {
+        println("Zadej souradnice pro vystrel")
+        println("Zadej sloupec")
+        val column = scanner.nextInt() - 1
+        println("Zadej řádek")
+        val row = scanner.nextInt() - 1
+        val ship = playGroundPC.shoot(Coordinate(row, column))
+        val isHit = ship != null
+        val isSink = playGroundPC.isSink(ship)
+        println("======== MAPA PC ========")
+        DrawGame.draw(playGroundPC)
+
+        if (isHit && isSink) {
+            println("Loď potopena")
+        } else if (isHit) {
+            println("Zásah")
+        } else println("Vedle")
+
+        if (playGroundPC.allShipSink()) {
+            println("Vyhrál jsi")
+            exitProcess(0)
+        }
+    }
+}
+
+fun setPlayerShips(playGround: PlayGround) {
     val columns = listOf(4, 5)
     val rows = listOf(2, 6)
     val lengths = listOf(3, 2)
@@ -49,48 +79,25 @@ fun main() {
         println("Zadej směr ${ShipDirection.H.name} nebo ${ShipDirection.V.name}")
 //        val direction = scanner.next()
         val direction = directions[x]
-        playGroundPlayer.insertShip(ShipSlim(Coordinate(row, column), length, ShipDirection.valueOf(direction)))
+        playGround.insertShip(ShipSlim(Coordinate(row, column), length, ShipDirection.valueOf(direction)))
         println("======== MAPA HRÁČE ========")
-        DrawGame.draw(playGroundPlayer)
+        DrawGame.draw(playGround)
     }
+}
 
-    val playGroundPC = PlayGround(size, size)
-
+fun setPCShips(playGround: PlayGround) {
     for (x in 0 until COUNT_OF_SHIPS) {
         var validShipPosition: Boolean
         var ship = ShipSlim.buildRandomShip()
         do {
-            validShipPosition = playGroundPC.checkInsertShip(ship = ship)
+            validShipPosition = playGround.checkInsertShip(ship = ship)
             if (!validShipPosition) {
-                ShipSlim.buildRandomShip()
+                ship = ShipSlim.buildRandomShip()
             }
         } while (!validShipPosition)
 
-        playGroundPC.insertShip(ship = ship)
+        playGround.insertShip(ship = ship)
     }
     println("======== MAPA PC ========")
-    DrawGame.draw(playGroundPC, true)
-
-    while (true) {
-        println("Zadej souradnice pro vystrel")
-        println("Zadej sloupec")
-        val column = scanner.nextInt() - 1
-        println("Zadej řádek")
-        val row = scanner.nextInt() - 1
-        val ship = playGroundPC.shoot(Coordinate(row, column))
-        val isHit = ship != null
-        val isSink = playGroundPC.isSink(ship)
-        DrawGame.draw(playGroundPC)
-
-        if (isHit && isSink) {
-            println("Loď potopena")
-        } else if (isHit) {
-            println("Zásah")
-        } else println("Vedle")
-
-        if (playGroundPC.allShipSink()) {
-            println("Vyhrál jsi")
-            exitProcess(0)
-        }
-    }
+    DrawGame.draw(playGround, true)
 }
