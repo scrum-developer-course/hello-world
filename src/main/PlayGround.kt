@@ -1,24 +1,26 @@
 package main
 
+import java.lang.Exception
+
 class PlayGround(val width: Int, val height: Int) {
 
     private val ships = mutableListOf<Ship>()
     private val hits = mutableListOf<Coordinate>()
 
     fun checkInsertShip(ship: Ship): Boolean {
-        return true
+        return ships.any { it.hasConflict(ship) }
     }
     fun insertShip(ship: Ship) {
         ships.add(ship)
     }
-    fun canShoot(coordinate: Coordinate) = hits.contains(coordinate)
+    fun canShoot(coordinate: Coordinate) = !hits.contains(coordinate)
 
     fun shoot(coordinate: Coordinate): Boolean {
-        return if (!hits.contains(coordinate)) {
+        return if (canShoot(coordinate)) {
             hits.add(coordinate)
             isShip(coordinate)
         } else {
-            false
+            throw Exception("Is already")
         }
     }
 
@@ -26,5 +28,9 @@ class PlayGround(val width: Int, val height: Int) {
 
     fun isShip(coordinate: Coordinate): Boolean {
         return ships.any { it.isShip(coordinate) }
+    }
+
+    fun allShipSink() : Boolean {
+        return ships.all { it.isSink(hits) }
     }
 }

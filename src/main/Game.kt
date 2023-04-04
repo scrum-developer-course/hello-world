@@ -1,5 +1,7 @@
 package main
 
+import java.lang.Error
+
 class Game(
     val firstPlayer: Player,
     val secondPlayer: Player
@@ -11,4 +13,15 @@ class Game(
             firstPlayer
         }
     }
+
+    fun isEnd() = firstPlayer.playGround.allShipSink() || secondPlayer.playGround.allShipSink()
+
+    fun getWinner(): Player {
+        return when {
+            firstPlayer.playGround.allShipSink() -> secondPlayer
+            secondPlayer.playGround.allShipSink() -> firstPlayer
+            else -> throw Error("Nobody win")
+        }
+    }
+
 }
