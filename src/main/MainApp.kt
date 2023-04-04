@@ -11,13 +11,13 @@ fun main() {
 
     for (x in 1..2) {
         println("Zadej loď $x")
-        println("Zadej sloupec")
+        println("Zadej souřadnici pro sloupec")
         val column = scanner.nextInt() - 1
-        println("Zadej řádek")
+        println("Zadej souřadnici pro řádek")
         val row = scanner.nextInt() - 1
-        println("Zadej délku")
+        println("Zadej délku lodě")
         val length = scanner.nextInt()
-        println("Zadej směr")
+        println("Zadej směr ${ShipDirection.H.name} nebo ${ShipDirection.V.name}")
         val direction = scanner.next()
         playGround.insertShip(ShipSlim(Coordinate(row, column), length, ShipDirection.valueOf(direction)))
         DrawGame.draw(playGround)

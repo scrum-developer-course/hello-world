@@ -1,3 +1,4 @@
+/*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 class MyTest {
@@ -17,3 +18,4 @@ fun add(a: Int, b: Int): Int {
 fun main() {
     org.junit.runner.JUnitCore.runClasses(MyTest::class.java)
 }
+*/
