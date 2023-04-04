@@ -1,0 +1,4 @@
+package calc
+
+class CalcTest {
+}
