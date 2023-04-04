@@ -4,6 +4,9 @@ import java.util.Scanner
 
 // Hello World Application
 
+const val PLAYGROUND_SIZE = 9
+const val COUNT_OF_SHIPS = 2
+
 private val scanner = Scanner(System.`in`)
 fun main() {
     println("Vítejte ve hře LODĚ")
@@ -17,21 +20,32 @@ fun main() {
     )
     println()
     println("Zadej velikost pole: ")
-    val size = scanner.nextInt()
+    // TODO - uncomment
+//    val size = scanner.nextInt()
+    val size = PLAYGROUND_SIZE
 
     val playGround = PlayGround(size, size)
     DrawGame.draw(playGround)
 
-    for (x in 1..2) {
+    val columns = listOf(4, 5)
+    val rows = listOf(2, 6)
+    val lengths = listOf(3, 2)
+    val directions = listOf("V", "H")
+
+    for (x in 0 until COUNT_OF_SHIPS) {
         println("Zadej loď $x")
         println("Zadej souřadnici pro sloupec")
-        val column = scanner.nextInt() - 1
+//        val column = scanner.nextInt() - 1
+        val column = columns[x] - 1
         println("Zadej souřadnici pro řádek")
-        val row = scanner.nextInt() - 1
+//        val row = scanner.nextInt() - 1
+        val row = rows[x] - 1
         println("Zadej délku lodě")
-        val length = scanner.nextInt()
+//        val length = scanner.nextInt()
+        val length = lengths[x]
         println("Zadej směr ${ShipDirection.H.name} nebo ${ShipDirection.V.name}")
-        val direction = scanner.next()
+//        val direction = scanner.next()
+        val direction = directions[x]
         playGround.insertShip(ShipSlim(Coordinate(row, column), length, ShipDirection.valueOf(direction)))
         DrawGame.draw(playGround)
     }
