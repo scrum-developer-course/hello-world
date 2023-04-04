@@ -35,6 +35,7 @@ fun main() {
     setPCShips(playGroundPC)
 
     while (true) {
+        // hraje hráč
         println("Zadej souradnice pro vystrel")
         println("Zadej sloupec")
         val column = scanner.nextInt() - 1
@@ -43,6 +44,19 @@ fun main() {
         val ship = playGroundPC.shoot(Coordinate(row, column))
         val isHit = ship != null
         val isSink = playGroundPC.isSink(ship)
+
+        // hraje PC
+        playGroundPlayer.shoot(
+            Coordinate(
+                Random.nextInt(1, PLAYGROUND_SIZE),
+                Random.nextInt(1, PLAYGROUND_SIZE)
+            )
+        )
+
+        // vykreslit mapky
+        println("======== MAPA HRÁČE ========")
+        DrawGame.draw(playGroundPlayer)
+
         println("======== MAPA PC ========")
         DrawGame.draw(playGroundPC)
 
@@ -54,6 +68,9 @@ fun main() {
 
         if (playGroundPC.allShipSink()) {
             println("Vyhrál jsi")
+            exitProcess(0)
+        } else if (playGroundPlayer.allShipSink()) {
+            println("Prohrál jsi")
             exitProcess(0)
         }
     }
