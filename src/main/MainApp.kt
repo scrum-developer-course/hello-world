@@ -6,22 +6,20 @@ import java.util.Scanner
 
 private val scanner = Scanner(System.`in`)
 fun main() {
-
-    println("Výtejte ve hře LODĚ")
+    println("Vítejte ve hře LODĚ")
     println()
-    println("                __/___            \n" +
+    println(
+        "                __/___            \n" +
             "          _____/______|           \n" +
             "  _______/_____\\_______\\_____     \n" +
             "  \\              < < <       |    \n" +
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    )
     println()
-    println("Zadej velikost pole")
-    println("Výška: ")
-    val height = scanner.nextInt()
-    println("Délka: ")
-    val width = scanner.nextInt()
+    println("Zadej velikost pole: ")
+    val size = scanner.nextInt()
 
-    val playGround = PlayGround(width, height)
+    val playGround = PlayGround(size, size)
     DrawGame.draw(playGround)
 
     for (x in 1..2) {
@@ -38,7 +36,7 @@ fun main() {
         DrawGame.draw(playGround)
     }
 
-    for (x in 1..4) {
+    while (true) {
         println("Zadej souradnice pro vystrel")
         println("Zadej sloupec")
         val column = scanner.nextInt() - 1

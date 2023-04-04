@@ -10,7 +10,7 @@ class DrawGame {
             }
             println()
             print("   ")
-            for (x in 1..playGround.width) {
+            for (x in 1..playGround.height) {
                 print("---")
             }
             println()
