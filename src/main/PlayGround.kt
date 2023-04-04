@@ -7,7 +7,7 @@ class PlayGround(val width: Int, val height: Int) {
     private val hits = mutableListOf<Coordinate>()
 
     fun checkInsertShip(ship: Ship): Boolean {
-        return ships.all { !it.hasConflict(ship) }
+        return !ship.hasConflict(width,height) && ships.all { !it.hasConflict(ship) }
     }
 
     fun insertShip(ship: Ship) {

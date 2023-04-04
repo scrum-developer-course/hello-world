@@ -38,9 +38,9 @@ class ShipSlim(
 
     override fun hasConflict(x: Int, y: Int): Boolean {
         return when {
-            position.x > x && position.y > y -> false
-            direction == ShipDirection.H -> (position.x + length) <= x
-            else -> (position.y + length) <= y
+            position.x > x && position.y > y -> true
+            direction == ShipDirection.H -> (position.x + length) > x
+            else -> (position.y + length) > y
         }
     }
 }

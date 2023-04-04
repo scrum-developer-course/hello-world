@@ -63,4 +63,34 @@ class TestShip {
         assert(ship1.hasConflict(ship2))
     }
 
+    @Test
+    fun testShipOverlay7(){
+        val ship1 = ShipSlim(Coordinate(3,3),2, ShipDirection.H)
+        assert(ship1.hasConflict(3,3))
+    }
+
+    @Test
+    fun testShipOverlay8(){
+        val ship1 = ShipSlim(Coordinate(3,3),2, ShipDirection.H)
+        assert(!ship1.hasConflict(5,5))
+    }
+
+    @Test
+    fun testShipOverlay9(){
+        val ship1 = ShipSlim(Coordinate(3,3),2, ShipDirection.H)
+        assert(!ship1.hasConflict(5,5))
+    }
+
+    @Test
+    fun testShipOverlay10(){
+        val ship1 = ShipSlim(Coordinate(3,3),2, ShipDirection.V)
+        assert(!ship1.hasConflict(5,5))
+    }
+
+    @Test
+    fun testShipOverlay11(){
+        val ship1 = ShipSlim(Coordinate(3,3),2, ShipDirection.V)
+        assert(ship1.hasConflict(4,4))
+    }
+
 }
