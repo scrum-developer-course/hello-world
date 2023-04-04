@@ -1,20 +1,19 @@
 package main
 
-enum class ShipDirection{
+enum class ShipDirection {
     V, H
 }
 class ShipSlim(
     private val position: Coordinate,
     private val length: Int,
-    private val direction: ShipDirection
+    private val direction: ShipDirection,
 ) : Ship {
 
     override fun isShip(coordinate: Coordinate): Boolean {
-
-        return if(direction == ShipDirection.H){
-             coordinate.x == position.x && (coordinate.y - position.y)>=0 && (coordinate.y - position.y) < length
+        return if (direction == ShipDirection.H) {
+            coordinate.x == position.x && (coordinate.y - position.y) >= 0 && (coordinate.y - position.y) < length
         } else {
-             coordinate.y == position.y && (coordinate.x - position.x)>=0 && ( coordinate.x - position.x) < length
+            coordinate.y == position.y && (coordinate.x - position.x) >= 0 && (coordinate.x - position.x) < length
         }
     }
 

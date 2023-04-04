@@ -4,13 +4,13 @@ import java.util.Scanner
 
 // Hello World Application
 
-
 private val scanner = Scanner(System.`in`)
 fun main() {
-    val playGround = PlayGround(9,9)
+    val playGround = PlayGround(9, 9)
     DrawGame.draw(playGround)
 
-    for (x in 1..2){
+    for (x in 1..2) {
+        println("Zadej loď $x")
         println("Zadej sloupec")
         val column = scanner.nextInt() - 1
         println("Zadej řádek")
@@ -23,23 +23,18 @@ fun main() {
         DrawGame.draw(playGround)
     }
 
-
-    for (x in 1..4){
+    for (x in 1..4) {
         println("Zadej souradnice pro vystrel")
         println("Zadej sloupec")
         val column = scanner.nextInt() - 1
         println("Zadej řádek")
         val row = scanner.nextInt() - 1
-        val isHit = playGround.shoot(Coordinate(row,column))
+        val isHit = playGround.shoot(Coordinate(row, column))
         DrawGame.draw(playGround)
-        if(isHit){
+        if (isHit) {
             println("Vaše lod byla zasazena")
         } else {
             println("Vedle")
         }
     }
-
-
-
 }
-
