@@ -1,4 +1,5 @@
 import main.Coordinate
+import main.PlayGround
 import main.ShipDirection
 import main.ShipSlim
 import org.testng.annotations.Test
@@ -91,5 +92,72 @@ class TestShip {
     fun testShipOverlay11(){
         val ship1 = ShipSlim(Coordinate(3,3),2, ShipDirection.V)
         assert(ship1.hasConflict(4,4))
+    }
+
+    @Test
+    fun testShipPlayGround(){
+        val playGround = PlayGround(4, 4)
+        assert(!playGround.checkInsertShip(ShipSlim(Coordinate(3,3),2, ShipDirection.V)))
+    }
+
+    @Test
+    fun testShipPlayGround1(){
+        val playGround = PlayGround(5, 5)
+        assert(playGround.checkInsertShip(ShipSlim(Coordinate(3,3),2, ShipDirection.V)))
+    }
+
+    @Test
+    fun testShipPlayGround2(){
+        val playGround = PlayGround(5, 5)
+        playGround.insertShip(ShipSlim(Coordinate(3,3),2, ShipDirection.H))
+        assert(!playGround.checkInsertShip(ShipSlim(Coordinate(3,3),2, ShipDirection.V)))
+    }
+
+    @Test
+    fun testShipHits(){
+        val ship = ShipSlim(Coordinate(3,2),2, ShipDirection.H)
+        val hits = listOf(Coordinate(3,2),Coordinate(3,3))
+        assert(ship.isSink(hits))
+    }
+
+    @Test
+    fun testShipHits2(){
+        val ship = ShipSlim(Coordinate(3,2),3, ShipDirection.H)
+        val hits = listOf(Coordinate(3,2),Coordinate(3,3))
+        assert(!ship.isSink(hits))
+    }
+
+    @Test
+    fun testPlayground() {
+        val playGround = PlayGround(9, 9)
+        playGround.insertShip(ShipSlim(Coordinate(3,2),2, ShipDirection.H))
+        playGround.insertShip(ShipSlim(Coordinate(5,6),2, ShipDirection.V))
+        playGround.shoot(Coordinate(3,2))
+        playGround.shoot(Coordinate(3,3))
+        playGround.shoot(Coordinate(5,6))
+        assert(!playGround.allShipSink())
+    }
+
+
+    @Test
+    fun testPlayground2() {
+        val playGround = PlayGround(9, 9)
+        playGround.insertShip(ShipSlim(Coordinate(3,2),2, ShipDirection.H))
+        playGround.insertShip(ShipSlim(Coordinate(5,6),2, ShipDirection.V))
+        playGround.shoot(Coordinate(3,2))
+        playGround.shoot(Coordinate(3,3))
+        playGround.shoot(Coordinate(5,6))
+        playGround.shoot(Coordinate(6,6))
+        assert(playGround.allShipSink())
+    }
+    @Test
+    fun testPlayground3() {
+        val playGround = PlayGround(9, 9)
+        playGround.insertShip(ShipSlim(Coordinate(3, 2), 2, ShipDirection.H))
+        playGround.insertShip(ShipSlim(Coordinate(5, 6), 2, ShipDirection.V))
+        assert(playGround.isShip(Coordinate(3, 3)) != null)
+        assert(playGround.isShip(Coordinate(1, 1)) == null)
+        assert(playGround.isShip(Coordinate(5, 6)) != null)
+
     }
 }

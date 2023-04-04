@@ -11,7 +11,11 @@ class PlayGround(val width: Int, val height: Int) {
     }
 
     fun insertShip(ship: Ship) {
-        ships.add(ship)
+        if(checkInsertShip(ship)){
+            ships.add(ship)
+        } else {
+            throw Error("Error")
+        }
     }
 
     fun canShoot(coordinate: Coordinate) = !hits.contains(coordinate)
