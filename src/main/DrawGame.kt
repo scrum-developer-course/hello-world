@@ -17,7 +17,8 @@ enum class Color(val hex: String) {
 class DrawGame {
 
     companion object {
-        fun draw(playGround: PlayGround) {
+        fun draw(playGround: PlayGround, hideShips: Boolean = false) {
+            // print column numbers
             print("   ")
             for (x in 1..playGround.width) {
                 print(" $x ")
@@ -28,9 +29,12 @@ class DrawGame {
                 print("---")
             }
             println()
+            // print playground
             for (x in 0 until playGround.width) {
+                // row number
                 print(x + 1)
                 print(" |")
+                // playground
                 for (y in 0 until playGround.height) {
                     val shot = Coordinate(x, y)
                     val isShip = playGround.isShip(Coordinate(x, y))
@@ -48,7 +52,10 @@ class DrawGame {
                                 x,
                                 y
                             )
-                        ) -> print(Color.ANSI_YELLOW.hex + " 1 " + Color.ANSI_RESET.hex)
+                        ) -> {
+                            if (!hideShips) print(Color.ANSI_YELLOW.hex + " * " + Color.ANSI_RESET.hex)
+                            else print(Color.ANSI_BLUE.hex + " ~ " + Color.ANSI_RESET.hex)
+                        }
 
                         else -> print(Color.ANSI_BLUE.hex + " ~ " + Color.ANSI_RESET.hex)
                     }

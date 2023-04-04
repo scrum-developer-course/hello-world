@@ -1,5 +1,6 @@
 package main
 
+import kotlin.random.Random
 import java.util.Scanner
 
 // Hello World Application
@@ -13,10 +14,10 @@ fun main() {
     println()
     println(
         "                __/___            \n" +
-            "          _____/______|           \n" +
-            "  _______/_____\\_______\\_____     \n" +
-            "  \\              < < <       |    \n" +
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+                "          _____/______|           \n" +
+                "  _______/_____\\_______\\_____     \n" +
+                "  \\              < < <       |    \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
     )
     println()
     println("Zadej velikost pole: ")
@@ -24,8 +25,9 @@ fun main() {
 //    val size = scanner.nextInt()
     val size = PLAYGROUND_SIZE
 
-    val playGround = PlayGround(size, size)
-    DrawGame.draw(playGround)
+    val playGroundPlayer = PlayGround(size, size)
+//    println("Mapa hráče")
+//    DrawGame.draw(playGroundPlayer)
 
     val columns = listOf(4, 5)
     val rows = listOf(2, 6)
@@ -33,7 +35,7 @@ fun main() {
     val directions = listOf("V", "H")
 
     for (x in 0 until COUNT_OF_SHIPS) {
-        println("Zadej loď $x")
+        println("Zadej loď ${x + 1}")
         println("Zadej souřadnici pro sloupec")
 //        val column = scanner.nextInt() - 1
         val column = columns[x] - 1
@@ -46,9 +48,28 @@ fun main() {
         println("Zadej směr ${ShipDirection.H.name} nebo ${ShipDirection.V.name}")
 //        val direction = scanner.next()
         val direction = directions[x]
-        playGround.insertShip(ShipSlim(Coordinate(row, column), length, ShipDirection.valueOf(direction)))
-        DrawGame.draw(playGround)
+        playGroundPlayer.insertShip(ShipSlim(Coordinate(row, column), length, ShipDirection.valueOf(direction)))
+        println("======== MAPA HRÁČE ========")
+        DrawGame.draw(playGroundPlayer)
     }
+
+    val playGroundPC = PlayGround(size, size)
+    println("Mapa PC")
+
+    for (x in 0 until COUNT_OF_SHIPS) {
+        playGroundPC.insertShip(
+            ship = ShipSlim(
+                position = Coordinate(
+                    Random.nextInt(1, PLAYGROUND_SIZE),
+                    Random.nextInt(1, PLAYGROUND_SIZE)
+                ),
+                length = Random.nextInt(1, 4),
+                direction = if (Random.nextBoolean()) ShipDirection.H else ShipDirection.V
+            )
+        )
+    }
+    println("======== MAPA PC ========")
+    DrawGame.draw(playGroundPC, true)
 
     while (true) {
         println("Zadej souradnice pro vystrel")
@@ -56,8 +77,8 @@ fun main() {
         val column = scanner.nextInt() - 1
         println("Zadej řádek")
         val row = scanner.nextInt() - 1
-        val isHit = playGround.shoot(Coordinate(row, column))
-        DrawGame.draw(playGround)
+        val isHit = playGroundPlayer.shoot(Coordinate(row, column))
+        DrawGame.draw(playGroundPlayer)
         if (isHit) {
             println("Vaše lod byla zasazena")
         } else {
