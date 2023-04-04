@@ -83,7 +83,7 @@ fun setPlayerShips(playGround: PlayGround) {
     val directions = listOf("V", "H")
 
     for (x in 0 until COUNT_OF_SHIPS) {
-        println("Zadej loď ${x + 1}")
+        println("Zadej loď ${x + 1}/$COUNT_OF_SHIPS")
         println("Zadej souřadnici pro sloupec")
 //        val column = scanner.nextInt() - 1
         val column = columns[x] - 1
