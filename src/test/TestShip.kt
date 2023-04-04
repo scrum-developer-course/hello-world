@@ -92,5 +92,4 @@ class TestShip {
         val ship1 = ShipSlim(Coordinate(3,3),2, ShipDirection.V)
         assert(ship1.hasConflict(4,4))
     }
-
 }

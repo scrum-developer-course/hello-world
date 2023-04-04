@@ -16,15 +16,19 @@ class PlayGround(val width: Int, val height: Int) {
 
     fun canShoot(coordinate: Coordinate) = !hits.contains(coordinate)
 
-    fun shoot(coordinate: Coordinate): Boolean {
+    fun shoot(coordinate: Coordinate): Ship {
         hits.add(coordinate)
         return isShip(coordinate)
     }
 
+    fun isSink(ship: Ship): Boolean {
+        return ship.isSink(hits)
+    }
+
     fun getHits(): List<Coordinate> = hits
 
-    fun isShip(coordinate: Coordinate): Boolean {
-        return ships.any { it.isShip(coordinate) }
+    fun isShip(coordinate: Coordinate): Ship {
+        return ships.first { it.isShip(coordinate) }
     }
 
     fun allShipSink(): Boolean {
